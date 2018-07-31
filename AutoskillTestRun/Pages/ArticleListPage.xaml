@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<local:BasePage xmlns="http://xamarin.com/schemas/2014/forms" 
+                xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+                x:Class="AutoskillTestRun.Pages.ArticleListPage"
+                xmlns:local="clr-namespace:AutoskillTestRun;assembly=AutoskillTestRun"
+                xmlns:behaviors="clr-namespace:AutoskillTestRun.Behaviors">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem 
+            Name="Add"  
+            Command="{Binding AddArticleCommand}" 
+            Order="Primary" 
+            Priority="0" />
+    </ContentPage.ToolbarItems>
+
+
+    <local:BasePage.Content>
+        <ListView 
+            x:Name="ListView"
+            ItemsSource="{Binding Articles}" 
+            SelectedItem="{Binding SelectedArticle}"
+            HasUnevenRows="True">
+            
+            <ListView.Behaviors>
+                <behaviors:EventToCommandBehavior 
+                    Command="{Binding SelectArticleCommand}"
+                    EventName="ItemSelected"/>
+            </ListView.Behaviors>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame Margin="5">
+                            <StackLayout>
+                                <Image Source="{Binding CoverImage}"/>
+
+                                <Label Text="{Binding Title}"
+                                       HorizontalOptions="Center"
+                                       FontSize="Small"/>
+
+                                <Label Text="{Binding Views, StringFormat= 'Views: {0}'}"
+                                       HorizontalOptions="Start"
+                                       FontSize="Micro"/>
+                            </StackLayout>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        
+    </local:BasePage.Content>
+</local:BasePage>
