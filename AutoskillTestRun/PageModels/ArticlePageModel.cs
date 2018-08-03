@@ -1,5 +1,6 @@
 ﻿using AutoskillTestRun.Models;
 using AutoskillTestRun.Services;
+using Plugin.Media;
 //using Plugin.Media;
 using ReactiveUI;
 using System;
@@ -33,26 +34,26 @@ namespace AutoskillTestRun.PageModels
         // Pick up an image from the studio of the camera 
         async Task ChooseImage()
         {
-            //await CrossMedia.Current.Initialize();
+            await CrossMedia.Current.Initialize();
 
-            //if (!CrossMedia.Current.IsPickPhotoSupported)
-            //{
-            //    await CoreMethods.DisplayAlert("No Camera", ":( No camera available.", "OK");
-            //    return;
-            //}
+            if (!CrossMedia.Current.IsPickPhotoSupported)
+            {
+                await CoreMethods.DisplayAlert("No Camera", ":( No camera available.", "OK");
+                return;
+            }
 
-            //var file = await CrossMedia.Current.PickPhotoAsync();
+            var file = await CrossMedia.Current.PickPhotoAsync();
 
-            //if (file == null)
-            //    return;
+            if (file == null)
+                return;
 
-            //await CoreMethods.DisplayAlert("File Location", file.Path, "OK");
+            await CoreMethods.DisplayAlert("File Location", file.Path, "OK");
 
-            //Article.CoverImage = ImageSource.FromStream(() =>
-            //{
-            //    var stream = file.GetStream();
-            //    return stream;
-            //});
+            Article.CoverImage = ImageSource.FromStream(() =>
+            {
+                var stream = file.GetStream();
+                return stream;
+            });
 
         }
 
